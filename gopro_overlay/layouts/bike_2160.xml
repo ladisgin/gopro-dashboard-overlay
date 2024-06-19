@@ -1,0 +1,77 @@
+<layout>
+    <!-- <composite x="400" y="60" name="date_and_time">
+        <component type="datetime" x="0" y="0" format="%Y/%m/%d" size="32" align="right"/>
+        <component type="datetime" x="0" y="48" format="%H:%M:%S.%f" truncate="5" size="64" align="right"/>
+    </composite> -->
+
+
+    <!-- <composite x="420" y="200" name="temperature">
+        <component type="metric_unit" x="-140" y="0" size="32" align="right" metric="temp" units="temp">TEMP({:~C})</component>
+        <component type="icon" x="-64" y="0" file="thermometer.png" size="64"/>
+        <component type="metric" x="-140" y="36" dp="0" size="40" align="right" metric="temp" units="temp"/>
+    </composite> -->
+
+    <!-- <composite x="3288" y="0" name="gps_info">
+        <frame name="gps-lock" x="452" y="48" width="64" height="64" bg="0,0,0,128" cr="5" opacity="0.8">
+            <component type="gps-lock-icon" size="64"/>
+         </frame>
+
+        <composite y="72">
+            <component type="text" x="0" y="0" size="32" align="left">GPS INFO</component>
+            <component type="text" x="0" y="48" size="32" align="left">Lat: </component>
+            <component type="text" x="256" y="48" size="32" align="left">Lon: </component>
+            <component type="metric" x="236" y="48" metric="lat" dp="12" size="32" align="right" cache="False"/>
+            <component type="metric" x="512" y="48" metric="lon" dp="12" size="32" align="right" cache="False"/>
+        </composite>
+    </composite> -->
+
+    <component type="timess" x="32" y="48" size="96"/>
+
+
+    <composite x="32" y="1800" name="big_kph">
+        <component type="metric_unit" metric="speed" units="kph" size="64">{:~c}</component>
+        <component type="metric" x="0" y="40" metric="speed" units="kph" dp="0" size="320" />
+    </composite>
+
+    <!-- <component type="chart" metric="gradient" units="none" seconds="300" height="200" x="3240" y="752"/> -->
+
+    <composite x="3544" y="628" name="gradient">
+        <component type="text" x="120" y="0" size="24">SLOPE(%)</component>
+        <component type="icon" x="0" y="0" file="slope-triangle.png" size="96"/>
+        <component type="metric" x="120" y="36" metric="gradient" dp="2" size="48" />
+    </composite>
+
+    <composite x="3288" y="628" name="altitude">
+        <component type="metric_unit" x="120" y="0" metric="alt" units="alt" size="24">ALT({:~C})</component>
+        <component type="icon" x="0" y="0" file="mountain.png" size="96"/>
+        <component type="metric" x="120" y="36" metric="alt" units="alt" dp="1" size="48" />
+    </composite>
+
+    <composite x="3800" y="1800" name="cadence">
+        <component type="text" x="-140" y="0" size="32" align="right">RPM</component>
+        <component type="icon" x="-96" y="0" file="gauge.png" size="96"/>
+        <component type="metric" x="-140" y="36" metric="cadence" dp="0" size="64" align="right"/>
+    </composite>
+
+    <composite x="3800" y="1960" name="heartbeat">
+        <component type="text" x="-140" y="0" size="32" align="right">BPM</component>
+        <component type="icon" x="-96" y="0" file="heartbeat.png" size="96"/>
+        <component type="metric" x="-140" y="36" metric="hr" dp="0" size="64" align="right"/>
+        <!-- <translate x="-1860" name="heartbeat-zone">
+            <component type="zone-bar" width="1600" height="150" metric="hr" max="200" z1="130" z2="163" z3="183" z0-rgb="52, 122, 235,200" z1-rgb="67,235,52,200" z2-rgb="240,232,19,200" z3-rgb="207,19,2,200"/>
+        </translate> -->
+    </composite>
+
+    <!-- <composite x="3800" y="1960" name="power">
+        <component type="text" x="-140" y="0" size="32" align="right">Watt</component>
+        <component type="icon" x="-128" y="0" file="power.png" size="128"/>
+        <component type="metric" x="-140" y="36" metric="power" dp="0" size="64" align="right"/>
+        <translate x="-1860" name="power-zone">
+            <component type="zone-bar"  width="1600" height="150" metric="power" max="800" z1="130" z2="160" z3="200" z0-rgb="67, 235, 52,200" z1-rgb="67,235,52,200" z2-rgb="240,232,19,200" z3-rgb="207,19,2,200" />
+        </translate>
+    </composite> -->
+
+
+    <!-- <component type="moving_map" name="moving_map" x="3288" y="200" size="512" zoom="32" corner_radius="35"/> -->
+    <component type="journey_map" name="journey_map" x="3288" y="48" size="512" corner_radius="35"/>
+</layout>

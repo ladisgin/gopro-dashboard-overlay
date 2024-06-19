@@ -288,6 +288,8 @@ def metric_accessor_from(name: str) -> Callable[[Entry], Optional[pint.Quantity]
         "azi": lambda e: e.azi,
         "cog": lambda e: e.cog,
 
+        # "timess": lambda e: e.timess,
+
         "gps-dop": lambda e: e.dop,
         "timestamp": lambda e: e.timestamp,
         "gps-packet": lambda e: e.packet,
@@ -352,6 +354,10 @@ def date_formatter_from_element(element, entry: Callable[[], Entry]):
     truncate = iattrib(element, "truncate", d=0)
 
     return date_formatter_from(entry, format_string, truncate)
+
+
+def date_formatter_timess(entry: Callable[[], Entry]):
+    return lambda: ':'.join( k[:2] for k in str(entry().timess).split(':')[:3])
 
 
 def nonesafe(v):
@@ -449,6 +455,19 @@ class Widgets:
         return text(
             at=at(element),
             value=date_formatter_from_element(element, entry),
+            font=self._font(element, "size", d=16),
+            align=attrib(element, "align", d="left"),
+            cache=battrib(element, "cache", d=True),
+            fill=rgbattr(element, "rgb", d=(255, 255, 255)),
+            stroke=rgbattr(element, "outline", d=(0, 0, 0)),
+            stroke_width=iattrib(element, "outline_width", d=2)
+        )
+
+    @allow_attributes({"x", "y", "size", "align", "cache", "rgb", "outline", "outline_width"})
+    def create_timess(self, element, entry, **kwargs):
+        return text(
+            at=at(element),
+            value=date_formatter_timess(entry),
             font=self._font(element, "size", d=16),
             align=attrib(element, "align", d="left"),
             cache=battrib(element, "cache", d=True),

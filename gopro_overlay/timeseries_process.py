@@ -102,6 +102,14 @@ def calculate_odo():
 
     return accept
 
+def calculate_timess():
+
+    def accept(e, fe):
+        timess = e.dt - fe.dt
+        return {"timess": timess}
+
+    return accept
+
 
 def filter_locked():
     fields = ["speed", "cspeed", "accel", "azi", "cog", "time", "dist", "grad", "cgrad", "alt"]

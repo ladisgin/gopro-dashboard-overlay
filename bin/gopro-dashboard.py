@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/Users/ladisgin/git_proj/gopro-dashboard-overlay/venv/bin/python
 import datetime
 import sys
 from importlib import metadata
@@ -36,6 +36,7 @@ from gopro_overlay.timing import PoorTimer, Timers
 from gopro_overlay.units import units
 from gopro_overlay.widgets.profile import WidgetProfiler
 
+import re 
 
 def accepter_from_args(include, exclude):
     if include and exclude:
@@ -157,6 +158,20 @@ if __name__ == "__main__":
                             "file-accessed": lambda f: f.atime
                         }
 
+                        match = re.search(r'VID_\d{8}_\d{6}_\d{2}_\d{3}', inputpath.name)
+
+                        if match:
+                            temp = inputpath.name.split("_")
+                            y, m, d = map(int, [temp[1][0:4], temp[1][4:6], temp[1][6:8]])
+                            h, mi, s = map(int, [temp[2][0:2], temp[2][2:4], temp[2][4:6]])
+
+                            start_date = datetime.datetime(y, m, d, h, mi, s, tzinfo=datetime.timezone.utc) - datetime.timedelta(hours=3)
+                            end_date = start_date + duration.timedelta()
+
+                            duration = Timeunit.from_timedelta(end_date - start_date)
+                            generate = "overlay"
+                        
+
                         if args.video_time_start:
                             start_date = fns[args.video_time_start](recording.file)
                             end_date = start_date + duration.timedelta()
@@ -263,8 +278,10 @@ if __name__ == "__main__":
 
                 frame_meta.process(timeseries_process.process_ses("point", lambda i: i.point, alpha=0.45),
                                    filter_fn=locked_2d)
+
                 frame_meta.process_deltas(timeseries_process.calculate_speeds(), skip=packets_per_second * 3,
                                           filter_fn=locked_2d)
+                frame_meta.process_from_start(timeseries_process.calculate_timess(), filter_fn=locked_2d)
                 frame_meta.process(timeseries_process.calculate_odo(), filter_fn=locked_2d)
                 frame_meta.process_accel(timeseries_process.calculate_accel(), skip=18 * 3)
                 frame_meta.process_deltas(timeseries_process.calculate_gradient(), skip=packets_per_second * 3,

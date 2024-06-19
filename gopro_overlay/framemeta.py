@@ -222,6 +222,17 @@ class FrameMeta:
                 updates = processor(entry_a, entry_b, skip)
                 if updates:
                     entry_b.update(**updates)
+
+    def process_from_start(self, processor, filter_fn: Callable[[Entry], bool] = lambda e: True):
+        self.check_modified()
+
+        for a in self.framelist:
+            entry = self.frames[a]
+            entry_start = self.frames[self.framelist[0]]
+            if filter_fn(entry):
+                updates = processor(entry, entry_start)
+                if updates:
+                    entry.update(**updates)
     
     def process(self, processor, filter_fn: Callable[[Entry], bool] = lambda e: True):
         self.check_modified()
